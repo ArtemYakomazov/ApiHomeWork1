@@ -54,4 +54,10 @@ public class StudentController {
         }
         return ResponseEntity.ok(Collections.emptyList());
     }
+
+    @GetMapping("/between")
+    public Collection<Student> findByAgeBetween(@RequestParam Integer from,
+                                                @RequestParam Integer to) {
+        return studentService.findByAgeBetween(from, to);
+    }
 }
