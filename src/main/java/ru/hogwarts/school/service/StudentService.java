@@ -40,4 +40,8 @@ public class StudentService {
         }
         return result;
     }
+
+    public Collection<Student> findByAgeBetween(int min, int max) {
+        return studentRepository.findByAgeBetween(min, max);
+    }
 }
