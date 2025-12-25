@@ -24,6 +24,10 @@ public class Student {
         this.faculty = faculty;
     }
 
+    public Student() {
+
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -71,5 +75,9 @@ public class Student {
 
     public Faculty getFaculty() {
         return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 }
