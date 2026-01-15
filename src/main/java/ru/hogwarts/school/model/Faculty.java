@@ -26,6 +26,10 @@ public class Faculty {
         this.color = color;
     }
 
+    public Faculty() {
+
+    }
+
     @Override
     public String toString() {
         return "Faculty{" +
@@ -73,5 +77,9 @@ public class Faculty {
 
     public Collection<Student> getStudents() {
         return students;
+    }
+
+    public void setStudents(Collection<Student> students) {
+        this.students = students;
     }
 }

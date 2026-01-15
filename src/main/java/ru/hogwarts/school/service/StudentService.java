@@ -31,6 +31,10 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
+    public Collection<Student> findAllByAge(Integer age) {
+        return studentRepository.findAllByAge(age);
+    }
+
     public Collection<Student> findByAge(int age) {
         ArrayList<Student> result = new ArrayList<>();
         for (Student student : studentRepository.findAll()) {

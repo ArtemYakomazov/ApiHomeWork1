@@ -66,4 +66,9 @@ public class StudentController {
     public Faculty getStudentWithFaculty(@PathVariable Long id) {
         return studentService.readStudentById(id).getFaculty();
     }
+
+    @GetMapping("/age")
+    public Collection<Student> studentsByAge(@RequestParam Integer age) {
+        return studentService.findAllByAge(age);
+    }
 }
