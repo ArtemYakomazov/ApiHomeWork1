@@ -1,32 +1,34 @@
 package ru.hogwarts.school.tests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.minidev.json.JSONObject;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.web.servlet.MockMvc;
-
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import ru.hogwarts.school.controller.FacultyController;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.service.FacultyService;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@Import(FacultyService.class)
+@WebMvcTest(FacultyController.class)
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -45,9 +47,9 @@ public class FacultyControllerMvcTest {
     private FacultyService facultyService;
 
     @Test
-    public void createFacultyTest() throws Exception {
-        final String name = "Гриффиндор";
-        final String color = "красный";
+    public void addFacultyTest() throws Exception {
+        final String name = "Griffindor";
+        final String color = "red";
         final long id = 1;
 
         JSONObject facultyObject = new JSONObject();
@@ -67,15 +69,15 @@ public class FacultyControllerMvcTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect((ResultMatcher) jsonPath("$.name").value(name))
-                .andExpect((ResultMatcher) jsonPath("$.color").value(color));
+                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.color").value(color));
 
     }
 
     @Test
-    public void readFacultyTest() throws Exception {
-        final String name = "Гриффиндор";
-        final String color = "красный";
+    public void findFacultyTest() throws Exception {
+        final String name = "Griffindor";
+        final String color = "red";
         final long id = 1;
 
         Faculty faculty = new Faculty();
@@ -89,9 +91,9 @@ public class FacultyControllerMvcTest {
                         .get("/faculty/" + id)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect((ResultMatcher) jsonPath("$.id").value(id))
-                .andExpect((ResultMatcher) jsonPath("$.name").value(name))
-                .andExpect((ResultMatcher) jsonPath("$.color").value(color));
+                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.color").value(color));
     }
 
     @Test
@@ -105,9 +107,9 @@ public class FacultyControllerMvcTest {
     }
 
     @Test
-    public void updateFacultyTest() throws Exception {
-        final String name = "Гриффиндор";
-        final String color = "красный";
+    public void editeFacultyTest() throws Exception {
+        final String name = "Griffindor";
+        final String color = "red";
         final long id = 1;
 
         JSONObject facultyObject = new JSONObject();
@@ -127,14 +129,14 @@ public class FacultyControllerMvcTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect((ResultMatcher) jsonPath("$.name").value(name))
-                .andExpect((ResultMatcher) jsonPath("$.color").value(color));
+                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.color").value(color));
     }
 
     @Test
     public void findFacultyByColorTest() throws Exception {
-        final String name = "Гриффиндор";
-        final String color = "красный";
+        final String name = "Griffindor";
+        final String color = "red";
         final long id = 1;
 
         JSONObject facultyObject = new JSONObject();
@@ -155,14 +157,14 @@ public class FacultyControllerMvcTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect((ResultMatcher) jsonPath("$[0].name").value(name))
-                .andExpect((ResultMatcher) jsonPath("$[0].color").value(color));
+                .andExpect(jsonPath("$[0].name").value(name))
+                .andExpect(jsonPath("$[0].color").value(color));
     }
 
     @Test
     public void findAllTest() throws Exception {
-        final String name = "Гриффиндор";
-        final String color = "красный";
+        final String name = "Griffindor";
+        final String color = "red";
         final long id = 1;
 
         JSONObject facultyObject = new JSONObject();
@@ -182,18 +184,18 @@ public class FacultyControllerMvcTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect((ResultMatcher) jsonPath("$[0].name").value(name))
-                .andExpect((ResultMatcher) jsonPath("$[0].color").value(color));
+                .andExpect(jsonPath("$[0].name").value(name))
+                .andExpect(jsonPath("$[0].color").value(color));
     }
 
     @Test
     public void findStudentsByFacultyTest() throws Exception {
-        final String name = "Гриффиндор";
-        final String color = "красный";
+        final String name = "Griffindor";
+        final String color = "red";
         final long id = 1;
 
-        final String sName = "Иван";
-        final int age = 15;
+        final String sName = "Harry";
+        final int age = 11;
         final long idS = 1;
 
         Student student = new Student();
@@ -216,8 +218,8 @@ public class FacultyControllerMvcTest {
                         .get("/faculty/facultyStudents/" + id)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect((ResultMatcher) jsonPath("$[0].name").value(sName))
-                .andExpect((ResultMatcher) jsonPath("$[0].age").value(age));
+                .andExpect(jsonPath("$[0].name").value(sName))
+                .andExpect(jsonPath("$[0].age").value(age));
     }
 
 }
