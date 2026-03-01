@@ -104,4 +104,16 @@ public class StudentController {
         Integer average = studentService.averageAgeStudentsStream();
         return ResponseEntity.ok(average);
     }
+
+    @GetMapping("/print-parallel")
+    public ResponseEntity<List<Student>> studentsPrintParallel() {
+        List<Student> students = studentService.studentsPrintParallel();
+        return ResponseEntity.ok(students);
+    }
+
+    @GetMapping("/print-synchronized")
+    public ResponseEntity<List<Student>> studentsPrintParallelSync() {
+        List<Student> students = studentService.studentsPrintParallelSync();
+        return ResponseEntity.ok(students);
+    }
 }
